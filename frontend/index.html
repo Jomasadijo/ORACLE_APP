@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digit Oracle</title>
+
+<style>
+:root {
+    --gold: #ffcc00;
+    --purple: #6e45e2;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #050510;
+    color: white;
+    font-family: Arial;
+}
+
+.container {
+    width: 380px;
+    padding: 40px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: var(--purple);
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #8465ff;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>ORACLE</h1>
+    <p>Digit Analysis & Commission Tracking</p>
+
+    <button onclick="linkAccount()">LINK DERIV ACCOUNT</button>
+</div>
+
+<script>
+const APP_ID = '33foZ7HWr4EtrGdgYHDyM';
+
+function linkAccount() {
+    const redirect = encodeURIComponent('http://127.0.0.1:5500/frontend/callback.html');
+
+    const authUrl = `https://oauth.deriv.com/oauth2/authorize?app_id=${APP_ID}&redirect_uri=${redirect}`;
+
+    window.location.href = authUrl;
+}
+</script>
+
+</body>
+</html>

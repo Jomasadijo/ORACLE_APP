@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Oracle Admin Dashboard</title>
+
+<style>
+body {
+    margin: 0;
+    background: #050510;
+    color: white;
+    font-family: Arial;
+    padding: 30px;
+}
+
+h1 {
+    color: #ffcc00;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th,
+.table td {
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px;
+    text-align: left;
+}
+
+.table th {
+    background: #161625;
+}
+
+.active {
+    color: #00ff88;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+
+<h1>ORACLE CLIENT DASHBOARD</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Client ID</th>
+            <th>Balance</th>
+            <th>Trade Volume</th>
+            <th>2% Estimated Commission</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody id="clientsTable"></tbody>
+</table>
+
+<script>
+async function loadClients() {
+    const res = await fetch('http://localhost:3000/api/clients');
+    const clients = await res.json();
+
+    const table = document.getElementById('clientsTable');
+
+    table.innerHTML = '';
+
+    clients.forEach(client => {
+        table.innerHTML += `
+            <tr>
+                <td>${client.loginid}</td>
+                <td>${client.balance} ${client.currency}</td>
+                <td>${client.trade_volume.toFixed(2)}</td>
+                <td>${client.estimated_commission.toFixed(2)}</td>
+                <td class="active">ACTIVE</td>
+            </tr>
+        `;
+    });
+}
+
+loadClients();
+setInterval(loadClients, 5000);
+</script>
+
+</body>
+</html>
