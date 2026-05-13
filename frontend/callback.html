@@ -8,6 +8,8 @@
 <h2>Connecting your account...</h2>
 
 <script>
+const API_URL = "https://backend-repo-lvwh.onrender.com";
+
 const params = new URLSearchParams(window.location.hash.substring(1));
 const token = params.get('token1');
 
@@ -17,23 +19,29 @@ async function saveClient() {
         return;
     }
 
-    const res = await fetch('http://localhost:3000/api/save-client', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ token })
-    });
+    try {
+        const res = await fetch(`${API_URL}/api/save-client`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token })
+        });
 
-    const data = await res.json();
+        const data = await res.json();
 
-    if (data.success) {
-        document.body.innerHTML = `
-            <h2>Account Linked Successfully</h2>
-            <p>Welcome ${data.client.loginid}</p>
-        `;
-    } else {
-        document.body.innerHTML = '<h2>Connection failed</h2>';
+        if (data.success) {
+            document.body.innerHTML = `
+                <h2>Account Linked Successfully</h2>
+                <p>Welcome ${data.client.loginid}</p>
+            `;
+        } else {
+            document.body.innerHTML = '<h2>Connection failed</h2>';
+        }
+
+    } catch (error) {
+        console.error(error);
+        document.body.innerHTML = '<h2>Server error. Please try again later.</h2>';
     }
 }
 

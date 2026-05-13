@@ -60,7 +60,7 @@ h1 {
 
 <script>
 async function loadClients() {
-    const res = await fetch('http://localhost:3000/api/clients');
+    const res = await fetch('https://backend-repo-lvwh.onrender.com/api/clients');
     const clients = await res.json();
 
     const table = document.getElementById('clientsTable');
